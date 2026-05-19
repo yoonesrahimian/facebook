@@ -1,23 +1,20 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="">
-</head>
-<body>
-    <div class="main">
-        <h1>Hello World!</h1>
+
+{% block title %}
+    لیست پست ها
+{% endblock %}
+
+
+{% block main %}
+    <ul class="list-group mt-5">
         {% for post in posts %}
-            <h1>{{ post.title }}</h1>
-            <p>{{ post.content }}</p>
-            <small>{{ post.user }}</small>
-            <samll>{{ post.created_at }}</samll>
-        {% endfor %}
-    </div>
-    <script></script>
-</body>
-</html>
+
+        <li class="list-group-item d-flex justify-between">
+
+           <a class="link" href="{% url 'post_details' post.id  %}">{{ post.title }}</a> 
+           
+        </li>
+         {% endfor %}
+    </ul>
+{% endblock %}

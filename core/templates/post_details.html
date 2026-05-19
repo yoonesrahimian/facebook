@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block main %}
+    <div class="card">
+        <div class="card-title">
+            {{ post.title }}
+        </div>
+        <div>
+            {{ post.content }} <br>
+            {{ post.user }} {{ post.created_at }}
+        </div>
+    </div>
+{% endblock %}
