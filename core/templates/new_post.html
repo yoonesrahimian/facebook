@@ -6,7 +6,30 @@
 
 {% block main %}
     <form action="{% url 'new_post' %}" method="post">
+        {% csrf_token %}
+        <!--
+        <label for="title">عنوان</label>
+        <label for="content">محتوا</label>
+        <label for="user">کاربر</label>
+        <label for="subject">دسته بندی</label>
         <input type="text" name="title">
+        <input type="text" name="content">
+        <input type="text" name="user">
+        <input type="text" name="subject">
+        -->
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {{ form.errors}}
+            </div>
+        {% endif %}
+        {% for field in form %}
+            <div>
+                {{ field.label}}
+                {{ field}}
+            </div>
+        {% endfor %}
+        
         <input type="submit" value="ایجاد">
+    
     </form>
 {% endblock %}
