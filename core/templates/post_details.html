@@ -13,5 +13,13 @@
             {{ post.content }} <br>
             {{ post.user }} {{ post.created_at }}
         </div>
+        <div class="card-footer">
+            <a href="{% url 'edit_post' post.id %}" class=" btn btn-warning">
+                ویرایش
+            </a>
+            <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">
+                حذف
+            </a>
+        </div>
     </div>
 {% endblock %}

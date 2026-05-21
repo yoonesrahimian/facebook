@@ -70,6 +70,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'facebook.wsgi.application'
 
 
+AUTH_USER_MODEL = 'core.CustomUser'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 

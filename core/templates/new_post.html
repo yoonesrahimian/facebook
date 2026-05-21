@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block main %}
+    <div class="row d-flex justify-between">
+        <div class="col-sm-8">
     <form action="{% url 'new_post' %}" method="post">
         {% csrf_token %}
         <!--
@@ -24,7 +26,6 @@
         {% endif %}
         {% for field in form %}
             <div>
-                {{ field.label}}
                 {{ field}}
             </div>
         {% endfor %}
@@ -32,4 +33,6 @@
         <input type="submit" value="ایجاد">
     
     </form>
+    </div>
+    </div>
 {% endblock %}

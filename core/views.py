@@ -1,6 +1,7 @@
-from django.shortcuts import render, HttpResponse
-from core.models import Post, User
+from django.shortcuts import render, HttpResponse, redirect
+from core.models import Post, CustomUser
 from core.forms import PostForm
+from django.contrib import messages
 
 # Create your views here.
 
@@ -33,11 +34,34 @@ def new_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            title = form.cleaned_data.get('title')
-            content = form.cleaned_data.get('content')
-            user = User.objects.filter(username=form.cleaned_data.get('user')).first()
-            subject = form.cleaned_data.get('subject')
-            new_post = Post.objects.create(title=title, content=content, user=user, subject=subject)
-            return HttpResponse(str(new_post))
+            # title = form.cleaned_data.get('title')
+            # content = form.cleaned_data.get('content')
+            # user = User.objects.filter(username=form.cleaned_data.get('user')).first()
+            # subject = form.cleaned_data.get('subject')
+            # new_post = Post.objects.create(title=title, content=content, user=user, subject=subject)
+            # return HttpResponse(str(new_post))
+            new_post = form.save()
+            messages.success(request, 'پست جدید با موفقیت ثبت شد')
+            return redirect('post_list')
+        else:
+            return messages.error(request, 'ایرادی در پر کردن فرم وجود داشت')
 
     return render(request, 'new_post.html', context={'form':form})
+
+
+def edit_post(request, post_id):
+    post = Post.objects.filter(id=post_id).first()
+    form = PostForm(instance=post)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "پست با موفقیت ویرایش شد")
+            return redirect('post_details', post_id=post.id)
+    return render(request, 'edit_post.html', context={'post':post, 'form':form})
+
+
+def delete_post(request, post_id):
+    Post.objects.filter(id=post_id).delete()
+    messages.success(request, "پست با موفقیت حذف شد")
+    return redirect('post_list')
