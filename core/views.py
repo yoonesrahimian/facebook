@@ -1,26 +1,28 @@
 from django.shortcuts import render, HttpResponse, redirect
-from core.models import Post, CustomUser
+from core.models import Post
+from accounts.models import CustomUser
 from core.forms import PostForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
 
 def say_hello (request):
     # context = {'name':'laptop', 'brand':'asus', 'price':1000000}
     posts = Post.objects.all()
     context = {'posts':posts}
-    return render(request, 'index.html', context=context)
+    return render(request, 'core/index.html', context=context)
 
 def post_list(request):
     posts = Post.objects.all()
     context = {'posts':posts}
-    return render(request, 'index.html', context=context)
+    return render(request, 'core/index.html', context=context)
 
 def post_details(request, post_id):
     post = Post.objects.filter(id=post_id).first()
     context = {'post':post}
-    return render(request, 'post_details.html', context=context)
+    return render(request, 'core/post_details.html', context=context)
 
+@login_required()
 def new_post(request):
     form = PostForm()
     # if request.method == 'POST':
@@ -40,13 +42,15 @@ def new_post(request):
             # subject = form.cleaned_data.get('subject')
             # new_post = Post.objects.create(title=title, content=content, user=user, subject=subject)
             # return HttpResponse(str(new_post))
-            new_post = form.save()
+            new_post = form.save(commit=False)
+            new_post.user = request.user
+            form.save()
             messages.success(request, 'پست جدید با موفقیت ثبت شد')
             return redirect('post_list')
         else:
             return messages.error(request, 'ایرادی در پر کردن فرم وجود داشت')
 
-    return render(request, 'new_post.html', context={'form':form})
+    return render(request, 'core/new_post.html', context={'form':form})
 
 
 def edit_post(request, post_id):
@@ -58,7 +62,7 @@ def edit_post(request, post_id):
             form.save()
             messages.success(request, "پست با موفقیت ویرایش شد")
             return redirect('post_details', post_id=post.id)
-    return render(request, 'edit_post.html', context={'post':post, 'form':form})
+    return render(request, 'core/edit_post.html', context={'post':post, 'form':form})
 
 
 def delete_post(request, post_id):

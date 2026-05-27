@@ -1,13 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 
 {% block title %}
     لیست پست ها
 {% endblock %}
 
-{{ request.user }}
+
 
 {% block main %}
+{{ request.user }}
     <ul class="list-group mt-5">
         {% for post in posts %}
 

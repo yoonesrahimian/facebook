@@ -1,6 +1,4 @@
 from django.contrib import admin
-from core.models import Post, CustomUser
+from core.models import Post
 
-# Register your models here.
-admin.site.register(CustomUser)
 admin.site.register(Post)
