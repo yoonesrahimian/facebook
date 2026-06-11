@@ -7,22 +7,22 @@
 {% block main %}
     <div class="row d-flex justify-between">
         <div class="col-sm-8">
-    <form action="{% url 'edit_post' post.id %}" method="post">
-        {% csrf_token %}
-        {% if form.errors %}
-            <div class="alert alert-danger">
-                {{ form.errors}}
-            </div>
-        {% endif %}
-        {% for field in form %}
-            <div>
-                {{ field}}
-            </div>
-        {% endfor %}
-        
-        <input type="submit" value="ویرایش">
-    
-    </form>
-    </div>
+            <form action="{% url 'edit_post' post.id %}" method="post">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.errors}}
+                    </div>
+                {% endif %}
+                {% for field in form %}
+                    <div>
+                        {{ field}}
+                    </div>
+                {% endfor %}
+                
+                <input type="submit" value="ویرایش">
+            
+            </form>
+        </div>
     </div>
 {% endblock %}

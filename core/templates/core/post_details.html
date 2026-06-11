@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <div class="card">
+    <div class="card px-5 py-5">
         <div class="card-title">
             {{ post.title }}
         </div>
@@ -13,15 +13,15 @@
             {{ post.content }} <br>
             {{ post.user }} {{ post.created_at }}
         </div>
+        {% if request.user == post.user %}
         <div class="card-footer">
-            {% if request.user == post.user %}
             <a href="{% url 'edit_post' post.id %}" class=" btn btn-warning">
                 ویرایش
             </a>
             <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">
                 حذف
             </a>
-            {% endif %}
         </div>
+        {% endif %}
     </div>
 {% endblock %}

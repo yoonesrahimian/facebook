@@ -12,6 +12,9 @@ def say_hello (request):
     context = {'posts':posts}
     return render(request, 'core/index.html', context=context)
 
+def home(request):
+    return redirect('post_list')
+
 def post_list(request):
     posts = Post.objects.all()
     context = {'posts':posts}
